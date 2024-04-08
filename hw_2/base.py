@@ -4,11 +4,7 @@ from hw_2 import exceptions
 
 
 class Vehicle(ABC):
-    weight: float
-    fuel: float
-    fuel_consumption: float
-    started: bool
-
+ 
     def __init__(self, weight: float =100, fuel: float =50, fuel_consumption: float =10):
         self.weight = weight
         self.fuel = fuel
@@ -29,4 +25,6 @@ class Vehicle(ABC):
                 self.fuel = self.fuel - required_fuel
             else:
                 raise exceptions.NotEnoughFuel("Not enough fuel to cover the distance")
+
+
 
