@@ -12,4 +12,8 @@ class NotEnoughFuel(Exception):
 
 class CargoOverload(Exception):
     #Ошибка появляется если авто перегружено
-    pass
+    def __int__(self, amount, max_cargo):
+        self.amount = amount
+        self.max_cargo = max_cargo
+    def __str__(self):
+        return print(f"Перегруз на: {self.max_cargo - self.amount}")
