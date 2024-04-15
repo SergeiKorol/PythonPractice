@@ -15,9 +15,6 @@ def read_csv(file_path):
             data.append(row) # Записываю в список
     return data
 
-books = read_csv('books.csv')
-print(books)
-
 # чтение данных из user.json и приведение его в другой формат. Через функцию или результат чтения в объект сохранять?
 def read_json(file_path):
     with open(file_path, 'r') as file:
@@ -57,8 +54,22 @@ def distribute_books(users, books):
 
 # записываем результаты в файл
 def write_json(data, file_path):
+    keys = list(data[0].keys()) if data else [] # определяем список ключей и если ключей нет то создаём пустой список
+
+    with open('reference.json', 'r') as ref_file: #читаю файл reference.json и определяем список ключей в нём.
+        reference_data = json.load(ref_file)
+        reference_keys = list(reference_data[0].keys()) if reference_data else []
+
+    filtered_data = []
+    for entry in data:
+        filtered_entry = {}
+        for key in entry:
+            if key in reference_keys:
+                filtered_entry[key] = entry[key]
+        filtered_data.append(filtered_entry)
+
     with open(file_path, 'w') as file:
-        json.dump(data, file, indent=4)
+        json.dump(filtered_data, file, indent=4)
 
 # Вызываем ранее созданные функции чтоб всё случилось
 
