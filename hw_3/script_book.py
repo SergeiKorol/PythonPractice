@@ -54,11 +54,13 @@ def distribute_books(users, books):
 
 # записываем результаты в файл
 def write_json(data, file_path):
-    keys = list(data[0].keys()) if data else [] # определяем список ключей и если ключей нет то создаём пустой список
+    keys = list(data[0].keys()) if data else []  #определяем список ключей и если ключей нет то создаём пустой список
 
-    with open('reference.json', 'r') as ref_file: #читаю файл reference.json и определяем список ключей в нём.
+    with open('reference.json', 'r') as ref_file:
         reference_data = json.load(ref_file)
-        reference_keys = list(reference_data[0].keys()) if reference_data else []
+
+    reference_books = reference_data[0]['books'] if reference_data else []  # структура ключей для книг
+    reference_keys = list(reference_data[0].keys()) if reference_data else []  # структура ключей для юзеров
 
     filtered_data = []
     for entry in data:
@@ -67,6 +69,9 @@ def write_json(data, file_path):
             if key in reference_keys:
                 filtered_entry[key] = entry[key]
         filtered_data.append(filtered_entry)
+
+    for user in filtered_data:
+        user['books'] = reference_books
 
     with open(file_path, 'w') as file:
         json.dump(filtered_data, file, indent=4)
