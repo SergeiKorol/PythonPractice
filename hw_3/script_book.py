@@ -1,27 +1,34 @@
-# импорт библиотек
-
 import json
 import csv
+from typing import List, Dict
 
-# Импорт адресов файлов?
+class Merge_csv_json:
+    """читаем данные из csv и преобразуем их в список словарей"""
+    def get_csv(self, path: str) -> List[Dict[str, any]]:
+        """получаем структуру из CSV файла"""
+        with open(path, newline='') as file:
+            reader = csv.DictReader(file)
+            return [
+                {"title": value["Title"],
+                 "author": value["Author"],
+                 "pages": int(value["Pages"]),
+                 "genre": value["Genre"]
+                } for value in reader
+            ]
 
-
-# чтение данных из books.csv и приведение его в другой формат
-def read_csv(file_path):
-    data = [] # создаю пустой список
-    with open(file_path, 'r') as file:
-        csv_reader = csv.DictReader(file)
-        for row in csv_reader:
-            data.append(row) # Записываю в список
-    return data
-
-# чтение данных из user.json и приведение его в другой формат. Через функцию или результат чтения в объект сохранять?
-def read_json(file_path):
-    with open(file_path, 'r') as file:
-        return json.load(file) # вернётся список из словарей
-
-# Распределяем книги
-# Создаю итератор
+    """читаем данные из json и преобразуем их в список словарей"""
+    def get_json(self, path: str) -> List[Dict[str, any]]:
+        """получаем структуру из JSON файла"""
+        with open(path) as file:
+            data = json.load(file)
+            return [
+                {"name": user_data["name"],
+                 "gender": user_data["gender"],
+                 "address": user_data["address"],
+                 "age": user_data["age"]
+                } for user_data in data
+            ]
+"""Итератор для списка книг"""
 class BookIterator:
     def __init__(self, books):
         self.books = books
@@ -38,8 +45,9 @@ class BookIterator:
         else:
             raise StopIteration
 
-# Распределяю книги
+"""распределяем книги"""
 def distribute_books(users, books):
+    """Распределяем книги"""
     book_iterator = BookIterator(books)
     num_users = len(users)
 
@@ -51,22 +59,17 @@ def distribute_books(users, books):
         if i < len(books) % num_users:
             user['books'].append(next(book_iterator))
 
-
-# записываем результаты в файл
+"""записываем данные в файл"""
 def write_json(data, file_path):
-    keys = list(data[0].keys()) if data else []  #определяем список ключей и если ключей нет то создаём пустой список
+    merge = Merge_csv_json()
 
-    with open('reference.json', 'r') as ref_file:
-        reference_data = json.load(ref_file)
-
-    reference_books = reference_data[0]['books'] if reference_data else []  # структура ключей для книг
-    reference_keys = list(reference_data[0].keys()) if reference_data else []  # структура ключей для юзеров
+    reference_books = merge.get_json('user.json')
 
     filtered_data = []
     for entry in data:
         filtered_entry = {}
         for key in entry:
-            if key in reference_keys:
+            if key in ['name', 'gender', 'address', 'age']:
                 filtered_entry[key] = entry[key]
         filtered_data.append(filtered_entry)
 
@@ -76,12 +79,12 @@ def write_json(data, file_path):
     with open(file_path, 'w') as file:
         json.dump(filtered_data, file, indent=4)
 
-# Вызываем ранее созданные функции чтоб всё случилось
-
 def main():
+    merge = Merge_csv_json()
+
     # Чтение данных из файлов
-    users = read_json('user.json')
-    books = read_csv('books.csv')
+    users = merge.get_json('user.json')
+    books = merge.get_csv('books.csv')
 
     # Распределение книг пользователям
     distribute_books(users, books)
