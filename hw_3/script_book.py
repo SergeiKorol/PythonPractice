@@ -47,7 +47,6 @@ def distribute_books(users, books):
             extra_books -= 1
 
 
-
 def main():
     # Чтение данных из файлов
     users = get_json(json_user)
