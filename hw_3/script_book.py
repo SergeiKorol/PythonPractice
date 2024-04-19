@@ -10,10 +10,10 @@ def get_csv(path: str) -> List[Dict[str, any]]:
         reader = csv.DictReader(file)
         return [
             {"title": value["Title"],
-            "author": value["Author"],
-            "pages": int(value["Pages"]),
-            "genre": value["Genre"]
-            } for value in reader
+             "author": value["Author"],
+             "pages": int(value["Pages"]),
+             "genre": value["Genre"]
+             } for value in reader
         ]
 
 
@@ -23,10 +23,10 @@ def get_json(path: str) -> List[Dict[str, any]]:
         data = json.load(file)
         return [
             {"name": user_data["name"],
-            "gender": user_data["gender"],
-            "address": user_data["address"],
-            "age": user_data["age"]
-            } for user_data in data
+             "gender": user_data["gender"],
+             "address": user_data["address"],
+             "age": user_data["age"]
+             } for user_data in data
         ]
 
 
@@ -46,10 +46,9 @@ def distribute_books(users, books):
             user['books'].append(next(iter_books))
             extra_books -= 1
 
-"""записываем данные в файл"""
+
 
 def main():
-
     # Чтение данных из файлов
     users = get_json(json_user)
     books = get_csv(csv_books)
@@ -60,6 +59,7 @@ def main():
     # Запись результатов в файл
     with open(json_result, 'w') as file:
         json.dump(users, file, indent=4)
+
 
 if __name__ == "__main__":
     main()
