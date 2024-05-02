@@ -48,6 +48,8 @@ def test_status_code_by_city(num):
     response = requests.get(f"http://jsonplaceholder.typicode.com/posts/{num}/comments")
     # Проверяем ответ через assert
     assert response.status_code == 200
+    res_json = response.json()
+    assert len(res_json) > 0
 
 
 # posts-comments post

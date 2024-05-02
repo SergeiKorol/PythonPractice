@@ -85,6 +85,10 @@ def test_status_code_by_state(state):
     response = requests.get(f"https://api.openbrewerydb.org/v1/breweries?by_state={state}&per_page=3")
     # Проверяем ответ через assert
     assert response.status_code == 200
+    data = response.json()
+    assert len(data) == 3
+    state_formatted = state.replace("_", " ").lower()
+    assert data[0]['state'].lower() == state_formatted
 
 
 # List Breweries by_type
@@ -94,3 +98,7 @@ def test_status_code_by_type(type):
     response = requests.get(f"https://api.openbrewerydb.org/v1/breweries?by_type={type}&per_page=3")
     # Проверяем ответ через assert
     assert response.status_code == 200
+    data = response.json()
+    assert len(data) == 3
+    type_formatted = type.lower()
+    assert data[0]['brewery_type'].lower() == type_formatted
