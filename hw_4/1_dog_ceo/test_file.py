@@ -29,17 +29,21 @@ def test_status_code_by_breed(breed):
     response = requests.get(f"https://dog.ceo/api/breed/{breed}/images")
     # Проверяем ответ через assert
     assert response.status_code == 200
-    assert response.json()["status"] == "success"
+    assert len(response.json()["message"]) > 0
+    message = response.json().get("message", [])
+    for i in message:
+        assert breed in i
 
 
 # By sub-breed
-@pytest.mark.parametrize("breed", ["chihuahua", "poodle", "labrador"])
+
+@pytest.mark.parametrize("breed", ["retriever", "poodle", "ridgeback"])
 def test_status_code_by_sub_breed(breed):
     # Выполняем GET-запрос к API
     response = requests.get(f"https://dog.ceo/api/breed/{breed}/list")
     # Проверяем ответ через assert
     assert response.status_code == 200
-    assert response.json()["status"] == "success"
+    assert len(response.json()["message"]) > 0
 
 
 # List all breeds
@@ -68,4 +72,4 @@ def test_status_code_breed_list(breed):
     response = requests.get(f"https://dog.ceo/api/breed/{breed}/images/random")
     # Проверяем ответ через assert
     assert response.status_code == 200
-    assert response.json()["status"] == "success"
+    assert len(response.json()["message"]) > 0

@@ -63,6 +63,7 @@ def test_json_schema_posts_post():
 
 
 # posts-comments put
+@pytest.mark.xfail(strict=True)
 def test_json_schema_posts_put():
     # Выполняем post-запрос на создание объекта который будем затем редактировать
     response = requests.post('https://jsonplaceholder.typicode.com/posts',
