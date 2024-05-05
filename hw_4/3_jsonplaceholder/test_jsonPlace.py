@@ -32,7 +32,6 @@ def test_json_schema_posts():
         assert False, f"JSON response does not match the expected schema: {e}"
 
 
-
 # posts-comments http get типы данных
 @pytest.mark.parametrize("num", ["1", "50", "100"])
 def test_status_code_posts_comments(num):
@@ -50,6 +49,7 @@ def test_status_code_posts_comments(num):
         assert isinstance(comment['email'], str), "email is not a string"
         assert isinstance(comment['body'], str), "body is not a string"
 
+
 # albums_photos типы данных
 @pytest.mark.parametrize("num", ["1", "50", "100"])
 def test_status_code_albums_photos(num):
@@ -65,6 +65,7 @@ def test_status_code_albums_photos(num):
         assert isinstance(photos['title'], str), "name is not a string"
         assert isinstance(photos['url'], str), "email is not a string"
         assert isinstance(photos['thumbnailUrl'], str), "body is not a string"
+
 
 # posts-comments post
 def test_json_schema_posts_post():
