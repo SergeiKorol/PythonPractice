@@ -32,25 +32,39 @@ def test_json_schema_posts():
         assert False, f"JSON response does not match the expected schema: {e}"
 
 
-# posts-comments https get
-@pytest.mark.parametrize("num", ["1", "50", "100"])
-def test_status_code_by_city(num):
-    # Выполняем GET-запрос к API
-    response = requests.get(f"https://jsonplaceholder.typicode.com/posts/{num}/comments")
-    # Проверяем ответ через assert
-    assert response.status_code == 200
 
-
-# posts-comments http get
+# posts-comments http get типы данных
 @pytest.mark.parametrize("num", ["1", "50", "100"])
-def test_status_code_by_city(num):
+def test_status_code_posts_comments(num):
     # Выполняем GET-запрос к API
     response = requests.get(f"http://jsonplaceholder.typicode.com/posts/{num}/comments")
     # Проверяем ответ через assert
     assert response.status_code == 200
     res_json = response.json()
-    assert len(res_json) > 0
+    for comment in res_json:
+        assert set(comment.keys()) == {'postId', 'id', 'name', 'email', 'body'}, \
+            "Missing or unexpected keys in comment"
+        assert isinstance(comment['postId'], int), "postId is not an integer"
+        assert isinstance(comment['id'], int), "id is not an integer"
+        assert isinstance(comment['name'], str), "name is not a string"
+        assert isinstance(comment['email'], str), "email is not a string"
+        assert isinstance(comment['body'], str), "body is not a string"
 
+# albums_photos типы данных
+@pytest.mark.parametrize("num", ["1", "50", "100"])
+def test_status_code_albums_photos(num):
+    response = requests.get(f"https://jsonplaceholder.typicode.com/albums/{num}/photos")
+    # Проверяем ответ через assert
+    assert response.status_code == 200
+    res_json = response.json()
+    for photos in res_json:
+        assert set(photos.keys()) == {'albumId', 'id', 'title', 'url', 'thumbnailUrl'}, \
+            "Missing or unexpected keys in comment"
+        assert isinstance(photos['albumId'], int), "postId is not an integer"
+        assert isinstance(photos['id'], int), "id is not an integer"
+        assert isinstance(photos['title'], str), "name is not a string"
+        assert isinstance(photos['url'], str), "email is not a string"
+        assert isinstance(photos['thumbnailUrl'], str), "body is not a string"
 
 # posts-comments post
 def test_json_schema_posts_post():
