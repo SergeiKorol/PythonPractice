@@ -13,9 +13,9 @@ class AdminPage:
     url = "http://localhost/administration/"
 
     # Локаторы
-    username_input_locator = (By.XPATH, '//div/input[@id="input-username"]')
-    password_input_locator = (By.XPATH, '//div/input[@id="input-password"]')
-    login_button_locator = (By.XPATH, '//button')
+    username_input_locator = (By.ID, 'input-username')
+    password_input_locator = (By.ID, 'input-password')
+    login_button_locator = (By.TAG_NAME, 'button')
     promo_link_locator = (By.XPATH, '//footer/a')
     data_input_form_locator = (By.XPATH, '//div[@class="card"]')
 
@@ -27,35 +27,35 @@ class AdminPage:
     # Методы для проверки наличия элементов
     def does_username_input_exist(self):
         try:
-            WebDriverWait(self._driver, 10).until(EC.visibility_of_element_located(self.username_input_locator))
+            WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.username_input_locator))
             return True
-        except:
-            return False
+        except Exception as e:
+            return e
 
     def does_password_input_exist(self):
         try:
-            WebDriverWait(self._driver, 10).until(EC.visibility_of_element_located(self.password_input_locator))
+            WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.password_input_locator))
             return True
-        except:
-            return False
+        except Exception as e:
+            return e
 
     def does_login_button_exist(self):
         try:
-            WebDriverWait(self._driver, 10).until(EC.visibility_of_element_located(self.login_button_locator))
+            WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.login_button_locator))
             return True
-        except:
-            return False
+        except Exception as e:
+            return e
 
     def does_promo_link_exist(self):
         try:
-            WebDriverWait(self._driver, 10).until(EC.visibility_of_element_located(self.promo_link_locator))
+            WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.promo_link_locator))
             return True
-        except:
-            return False
+        except Exception as e:
+            return e
 
     def does_data_input_form_exist(self):
         try:
-            WebDriverWait(self._driver, 10).until(EC.visibility_of_element_located(self.data_input_form_locator))
+            WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.data_input_form_locator))
             return True
-        except:
-            return False
+        except Exception as e:
+            return e
