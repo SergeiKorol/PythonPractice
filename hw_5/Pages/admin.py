@@ -1,15 +1,9 @@
-# Поле ввода username //div/input[@id="input-username"]
-# Поле ввода password //div/input[@id="input-password"]
-# Единственная кнопка  login //button
-# Ссылка на промо //footer/a
-# форма для ввода данных //div[@class="card"]
-
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
-class AdminPage:
+class AdminPage():
     url = "http://localhost/administration/"
 
     # Локаторы
