@@ -1,13 +1,15 @@
 from selenium import webdriver
-from Pages.catalog_components import CatalogPage
+from hw_5.Pages.catalog_components import CatalogPage
 
 driver = webdriver.Chrome()
 catalog_page = CatalogPage(driver)
 
 
+
 def test_sort_by_text():
+    # CSS expected
     catalog_page.move_phones_link()
-    assert catalog_page.does_sort_by_text_exist()
+    assert catalog_page.does_sort_by_text_exist() # == CSS expected
 
 
 def test_ssort_by_dropdown():

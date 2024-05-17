@@ -28,14 +28,13 @@ class CatalogPage:
         self._driver = driver
         self._driver.maximize_window()
         self._driver.get(self.url)
+        self._driver.implicitly_wait(3)
 
     # Методы для проверки наличия элементов
     def does_sort_by_text_exist(self):
-        try:
-            WebDriverWait(self._driver, 10).until(EC.visibility_of_element_located(self.sort_by_text_locator))
-            return True
-        except:
-            return False
+        sort_by = WebDriverWait(self._driver, 10).until(EC.visibility_of_element_located(self.sort_by_text_locator).get_attribute() # достать прорепти CSS
+        return sort_by
+
 
     def does_sort_by_dropdown_exist(self):
         try:
@@ -66,8 +65,7 @@ class CatalogPage:
             return False
 
     def move_phones_link(self):
-        self._driver.implicitly_wait(10)
         phones_link = self._driver.find_element(By.LINK_TEXT, "Phones & PDAs")
         phones_link.click()
-        self._driver.implicitly_wait(10)
+
         time.sleep(3)
