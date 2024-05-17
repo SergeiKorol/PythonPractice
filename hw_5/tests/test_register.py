@@ -1,7 +1,5 @@
 from selenium import webdriver
-
-
-from hw_5.Pages.register_page import RegisterPage
+from Pages.register_page import RegisterPage
 
 driver = webdriver.Chrome()
 register_page = RegisterPage(driver)

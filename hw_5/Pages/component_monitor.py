@@ -8,16 +8,19 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import time
 
 
 class MonitorPage:
-    url = "http://localhost/en-gb/product/desktops/apple-cinema"
+    url = "http://localhost"
+    #url = "http://localhost/en-gb/product/desktops/apple-cinema"
 
     # Локаторы
     item_name_locator = (By.XPATH, '//h1')
-    item_price_locator = (By.XPATH, '//h2/span[@class="price-new')
+    item_price_locator = (By.XPATH, '//h2/span[@class="price-new"]')
     wishlist_button_locator = (By.CSS_SELECTOR, '.fa-solid fa-heart')
-    compare_button_locator = (By.XPATH, '//button[contains(@aria-label, "Compare this Product")]')
+    #compare_button_locator = (By.XPATH, "//button[@aria-label='Compare this Product']")
+    compare_button_locator = (By.CSS_SELECTOR, "button[aria-label='Compare this Product']")
     text_Available_Options_locator = (By.XPATH, '//div[@id="product"]/form/h3')
     add_to_cart_button_locator = (By.XPATH, '//button[@id="button-cart"]')
 
@@ -68,3 +71,19 @@ class MonitorPage:
             return True
         except:
             return False
+
+    def move_to_monitor(self):
+        self._driver.implicitly_wait(10)
+        components_link = self._driver.find_element(By.LINK_TEXT, "Components")
+        components_link.click()
+        self._driver.implicitly_wait(10)
+        time.sleep(3)
+        self._driver.implicitly_wait(10)
+        monitors_link = self._driver.find_element(By.LINK_TEXT, "Monitors (2)")
+        monitors_link.click()
+        self._driver.implicitly_wait(10)
+        time.sleep(3)
+        apple_link = self._driver.find_element(By.LINK_TEXT, 'Apple Cinema 30"')
+        apple_link.click()
+        self._driver.implicitly_wait(10)
+

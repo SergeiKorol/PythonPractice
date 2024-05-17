@@ -9,10 +9,12 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import time
 
 
 class CatalogPage:
-    url = "http://localhost/en-gb/catalog/smartphone"
+    url = "http://localhost"
+    #url = "http://localhost/en-gb/catalog/smartphone"
 
     # Локаторы
     sort_by_text_locator = (By.XPATH, '//div/label[@for="input-sort"]')
@@ -20,6 +22,7 @@ class CatalogPage:
     limit_dropdown_locator = (By.XPATH, '//div/select[@id="input-limit"]')
     compare_button_locator = (By.XPATH, '//a[@id="compare-total"]/i')
     button_list_locator = (By.XPATH, '//div/button[@id="button-list"]/i')
+    # //a[contains(@href,'/catalog/smartphone') and contains(@class,'nav-link')]
 
     def __init__(self, driver):
         self._driver = driver
@@ -61,3 +64,10 @@ class CatalogPage:
             return True
         except:
             return False
+
+    def move_phones_link(self):
+        self._driver.implicitly_wait(10)
+        phones_link = self._driver.find_element(By.LINK_TEXT, "Phones & PDAs")
+        phones_link.click()
+        self._driver.implicitly_wait(10)
+        time.sleep(3)
