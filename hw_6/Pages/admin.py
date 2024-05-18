@@ -17,6 +17,13 @@ class AdminPage():
     login_button_locator = (By.TAG_NAME, 'button')
     promo_link_locator = (By.XPATH, '//footer/a')
     data_input_form_locator = (By.XPATH, '//div[@class="card"]')
+    catalog_locator = (By.XPATH, '//a[@href="#collapse-1" and contains(@class, "parent") and contains(@class, "collapsed")]')
+    product_locator =(By.XPATH, '//a[contains(@href, "route=catalog/product")]')
+    #add_new_locator = (By.XPATH, '//a[contains(@aria-label, "Add New") and contains(@href, "route=catalog/option.form")]')
+    #add_new_locator = (By.XPATH, '//a[contains(@aria-label, "Add New") and contains(@class, "btn btn-primary")]')
+    #add_new_locator = (By.XPATH, '//div[@id="content"]//a[@aria-label="Add New" and contains(@class, "btn btn-primary")]')
+    add_new_locator = (By.XPATH, '//a[contains(@aria-label, "Add New")]')
+
 
     def __init__(self, driver):
         self._driver = driver
@@ -42,11 +49,27 @@ class AdminPage():
         password.send_keys("bitnami")
 
     def login_button_click(self):
+        """
+        Метод жмём по кнопке login
+        """
         WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.password_input_locator))
         button = self._driver.find_element(By.TAG_NAME, 'button')
         button.click()
         time.sleep(2)
 
+    def move_to_addNew_product(self):
+        """
+        Метод перехода к странице создания товара
+        """
+        WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.catalog_locator))
+        self._driver.find_element(*self.catalog_locator).click()
+        time.sleep(2)
+        WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.product_locator))
+        self._driver.find_element(*self.product_locator).click()
+        time.sleep(10)
+        WebDriverWait(self._driver, 5).until(EC.visibility_of_element_located(self.add_new_locator))
+        self._driver.find_element(*self.add_new_locator).click()
+        time.sleep(2)
 
     def does_username_input_exist(self):
         """
