@@ -1,0 +1,55 @@
+{
+  "posts_schema": {
+        "type": "object",
+        "properties": {
+            "userId": {"type": "integer"},
+            "id": {"type": "integer"},
+            "title": {"type": "string"},
+            "body": {"type": ["string", "null"]}
+        },
+        "required": [
+            "userId",
+            "id",
+            "title",
+            "body"
+        ]
+    },
+  "posts_comment": {
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "postId": {"type": "integer"},
+      "id": {"type": "integer"},
+      "name": {"type": "string"},
+      "email": {"type": "string", "format": "email"},
+      "body": {"type": "string"}
+    },
+    "required": ["postId", "id", "name", "email", "body"]
+  }
+},
+  "albums_photos": {
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "albumId": {"type": "integer"},
+      "id": {"type": "integer"},
+      "title": {"type": "string"},
+      "url": {"type": "string", "format": "uri"},
+      "thumbnailUrl": {"type": "string", "format": "uri"}
+    },
+    "required": ["albumId", "id", "title", "url", "thumbnailUrl"]
+  }
+},
+  "posts_post": {
+  "type": "object",
+  "properties": {
+    "title": {"type": "string"},
+    "body": {"type": "string"},
+    "userId": {"type": "string"},
+    "id": {"type": "integer"}
+  },
+  "required": ["title", "body", "userId", "id"]
+}
+}
