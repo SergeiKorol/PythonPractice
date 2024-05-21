@@ -28,8 +28,14 @@ class AdminPage():
     meta_title_locator = (By.ID, 'input-meta-title-1')
     data_tab_locator = (By.XPATH, '//a[contains(text(), "Data")]')
     model_locator = (By.ID, 'input-model')
-
-
+    button_save_locator = (By.XPATH, '//button[@type="submit"]')
+    seo_tab_locator = (By.XPATH, '//a[contains(text(), "SEO")and @role="tab"]')
+    seo_text_locator = (By.ID, 'input-keyword-0-1')
+    #back_button_locator = (By.XPATH, '//a[contains(@aria-label, "Back")]')
+    back_button_locator = (By.XPATH, '//div[@class="float-end"]/a')
+    column_quantity_locator= (By.XPATH, '//a[contains(text(), "Quantity")]')
+    rows_in_tab = (By.XPATH, '//tbody/tr')
+    alert_button_locator = (By.XPATH, '//button[@type="button"]')
 
 
     def __init__(self, driver):
@@ -62,7 +68,7 @@ class AdminPage():
         WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.password_input_locator))
         button = self._driver.find_element(By.TAG_NAME, 'button')
         button.click()
-        time.sleep(2)
+
 
     def move_to_addNew_product(self):
         """
@@ -70,13 +76,70 @@ class AdminPage():
         """
         WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.catalog_locator))
         self._driver.find_element(*self.catalog_locator).click()
-        time.sleep(2)
+
         WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.product_locator))
         self._driver.find_element(*self.product_locator).click()
         time.sleep(10)
         WebDriverWait(self._driver, 5).until(EC.visibility_of_element_located(self.add_new_locator))
         self._driver.find_element(*self.add_new_locator).click()
-        time.sleep(2)
+
+
+    def make_new_product(self):
+        WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.product_name_locator))
+        product_name = self._driver.find_element(*self.product_name_locator)
+        product_name.clear()
+        product_name.send_keys("Test Product_1")
+
+        WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.meta_title_locator))
+        meta_title = self._driver.find_element(*self.meta_title_locator)
+        meta_title.clear()
+        meta_title.send_keys("Test Product_meta")
+
+        WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.data_tab_locator))
+        self._driver.find_element(*self.data_tab_locator).click()
+
+        WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.model_locator))
+        model = self._driver.find_element(*self.model_locator)
+        model.clear()
+        model.send_keys("Test Product_model")
+
+        WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.seo_tab_locator))
+        self._driver.find_element(*self.seo_tab_locator).click()
+
+
+        WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.seo_text_locator))
+        seo_text = self._driver.find_element(*self.seo_text_locator)
+        seo_text.clear()
+        seo_text.send_keys("Test_Product_seo_text")
+
+        WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.button_save_locator))
+        self._driver.find_element(*self.button_save_locator).click()
+
+    def back_button_click(self):
+        WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.alert_button_locator))
+        self._driver.find_element(*self.alert_button_locator).click()
+        WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.back_button_locator))
+        self._driver.find_element(*self.back_button_locator).click()
+
+
+    def sort_by_quantity(self):
+        WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.column_quantity_locator))
+        self._driver.find_element(*self.column_quantity_locator).click()
+        WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.column_quantity_locator))
+        self._driver.find_element(*self.column_quantity_locator).click()
+
+    def check_product_in_table(self):
+        rows = WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.rows_in_tab))
+        self._driver.find_element(*self.rows_in_tab)
+        product_found = False
+        for row in rows:
+            # Поиск  имени продукта в каждой из строк
+            product_name_cell = row.find_element(By.XPATH, ".//td[3]")
+            if "Test Product_1" in product_name_cell.text:
+                product_found = True
+                break
+        print(product_found)
+        return product_found
 
     def does_username_input_exist(self):
         """

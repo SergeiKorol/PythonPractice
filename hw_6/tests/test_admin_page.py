@@ -13,6 +13,10 @@ def test_item_add():
     admin_page.password_input()
     admin_page.login_button_click()
     admin_page.move_to_addNew_product()
+    admin_page.make_new_product()
+    admin_page.back_button_click()
+    admin_page.sort_by_quantity()
+    assert admin_page.check_product_in_table()
 
 def test_username_input():
     """
