@@ -5,6 +5,7 @@ import time
 driver = webdriver.Chrome()
 admin_page = AdminPage(driver)
 
+#добавить проверку существует ли товар
 def test_item_add():
     """
     Тест проверяет возможность добавления товара

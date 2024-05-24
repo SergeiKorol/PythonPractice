@@ -129,16 +129,28 @@ class AdminPage():
         self._driver.find_element(*self.column_quantity_locator).click()
 
     def check_product_in_table(self):
-        rows = WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.rows_in_tab))
-        self._driver.find_element(*self.rows_in_tab)
-        product_found = False
+        rows = WebDriverWait(self._driver, 2).until(
+            EC.visibility_of_all_elements_located((By.XPATH, '//tbody/tr'))
+        )
+        product_names = []
         for row in rows:
-            # Поиск  имени продукта в каждой из строк
-            product_name_cell = row.find_element(By.XPATH, ".//td[3]")
-            if "Test Product_1" in product_name_cell.text:
+            # Найти ячейку с именем продукта в текущей строке
+            product_name_cell = row.find_element(By.XPATH, './td[3]')
+            # Получить полный текст ячейки
+            full_text = product_name_cell.text
+            # Извлечь имя продукта, исключая все после '\n'
+            product_name = full_text.split('\n')[0].strip()
+            # Добавить имя продукта в список
+            product_names.append(product_name)
+
+        print(product_names)
+
+        product_found = False
+        for row in product_names:
+
+            if "Test Product_1" in product_names:
                 product_found = True
                 break
-        print(product_found)
         return product_found
 
     def does_username_input_exist(self):
