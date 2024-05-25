@@ -36,7 +36,9 @@ class AdminPage():
     column_quantity_locator= (By.XPATH, '//a[contains(text(), "Quantity")]')
     rows_in_tab = (By.XPATH, '//tbody/tr')
     alert_button_locator = (By.XPATH, '//button[@type="button"]')
-
+    logout_button_lockator = (By.XPATH,'//li[@id="nav-logout"]/a')
+    new_product_checkbox_locator = (By.XPATH, '//tbody/tr[2]/td[1]')
+    delete_button_lockator =(By.CSS_SELECTOR, ".fa-trash-can")
 
     def __init__(self, driver):
         self._driver = driver
@@ -79,10 +81,11 @@ class AdminPage():
 
         WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.product_locator))
         self._driver.find_element(*self.product_locator).click()
-        time.sleep(10)
+
+
+    def add_new_click(self):
         WebDriverWait(self._driver, 5).until(EC.visibility_of_element_located(self.add_new_locator))
         self._driver.find_element(*self.add_new_locator).click()
-
 
     def make_new_product(self):
         WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.product_name_locator))
@@ -143,7 +146,7 @@ class AdminPage():
             # Добавить имя продукта в список
             product_names.append(product_name)
 
-        print(product_names)
+
 
         product_found = False
         for row in product_names:
@@ -153,38 +156,54 @@ class AdminPage():
                 break
         return product_found
 
-    def does_username_input_exist(self):
-        """
-        Метод для проверки наличия элемента username и получения его CSS стиля color
-        """
-        username = WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.username_input_locator))
-        return username.value_of_css_property("color")
+    def click_logout(self):
+        WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.logout_button_lockator))
+        self._driver.find_element(*self.logout_button_lockator).click()
 
-    def does_password_input_exist(self):
-        """
-        Метод для проверки наличия элемента password и получения его CSS стиля color
-        """
-        password = WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.password_input_locator))
-        return password.value_of_css_property("color")
+    def checkbox_click(self):
+        WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.new_product_checkbox_locator))
+        self._driver.find_element(*self.new_product_checkbox_locator).click()
 
-    def does_login_button_exist(self):
-        """
-        Метод для проверки наличия элемента login_button и получения его CSS стиля color
-        """
-        login_button = WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.login_button_locator))
-        return login_button.value_of_css_property("color")
+    def alert_click(self):
+        self._driver.switch_to.alert.accept()
 
-    def does_promo_link_exist(self):
-        """
-        Метод для проверки наличия элемента promo_link и получения его CSS стиля color
-        """
-        promo_link = WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.promo_link_locator))
-        return promo_link.value_of_css_property("color")
+    def delete_button_click(self):
+        WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.delete_button_lockator))
+        self._driver.find_element(*self.delete_button_lockator).click()
 
-    def does_data_input_form_exist(self):
-        """
-        Метод для проверки наличия элемента data_input_form и получения его CSS стиля color
-        """
-        data_input = WebDriverWait(self._driver, 2).until(
-            EC.visibility_of_element_located(self.data_input_form_locator))
-        return data_input.value_of_css_property("color")
+
+    # def does_username_input_exist(self):
+    #     """
+    #     Метод для проверки наличия элемента username и получения его CSS стиля color
+    #     """
+    #     username = WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.username_input_locator))
+    #     return username.value_of_css_property("color")
+    #
+    # def does_password_input_exist(self):
+    #     """
+    #     Метод для проверки наличия элемента password и получения его CSS стиля color
+    #     """
+    #     password = WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.password_input_locator))
+    #     return password.value_of_css_property("color")
+    #
+    # def does_login_button_exist(self):
+    #     """
+    #     Метод для проверки наличия элемента login_button и получения его CSS стиля color
+    #     """
+    #     login_button = WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.login_button_locator))
+    #     return login_button.value_of_css_property("color")
+    #
+    # def does_promo_link_exist(self):
+    #     """
+    #     Метод для проверки наличия элемента promo_link и получения его CSS стиля color
+    #     """
+    #     promo_link = WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.promo_link_locator))
+    #     return promo_link.value_of_css_property("color")
+    #
+    # def does_data_input_form_exist(self):
+    #     """
+    #     Метод для проверки наличия элемента data_input_form и получения его CSS стиля color
+    #     """
+    #     data_input = WebDriverWait(self._driver, 2).until(
+    #         EC.visibility_of_element_located(self.data_input_form_locator))
+    #     return data_input.value_of_css_property("color")
