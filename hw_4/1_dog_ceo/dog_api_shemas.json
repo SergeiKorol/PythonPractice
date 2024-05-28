@@ -1,0 +1,65 @@
+{
+   "random_image_schema" : {
+        "type": "object",
+        "properties": {
+            "message": {"type": "string"},
+            "status": {"type": "string"}
+        },
+        "required": ["message", "status"]
+  },
+  "by_breed_schema" : {
+    "type": "object",
+    "properties": {
+        "message": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "format": "uri"
+            }
+        },
+        "status": {
+            "type": "string",
+            "enum": ["success"]
+        }
+    },
+    "required": ["message", "status"]
+  },
+  "by_sub_breed_schema" : {
+    "type": "object",
+    "properties": {
+        "message": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "status": {
+            "type": "string",
+            "enum": ["success"]
+        }
+    },
+    "required": ["message", "status"]
+},
+  "list_all_breeds_schema": {
+        "type": "object",
+        "properties": {
+            "message": {"type": "object"},
+            "status": {"type": "string"}
+        },
+        "required": ["message", "status"]
+    },
+  "breed_list": {
+    "type": "object",
+    "properties": {
+        "message": {
+            "type": "string",
+            "format": "uri"
+        },
+        "status": {
+            "type": "string",
+            "enum": ["success"]
+        }
+    },
+    "required": ["message", "status"]
+}
+}
