@@ -18,7 +18,7 @@ def test_item_add():
     admin_page.back_button_click()
     admin_page.sort_by_quantity()
     assert admin_page.check_product_in_table() == True
-    admin_page.logout_button_lockator
+    admin_page.login_button_click()
 
 def test_item_delete():
     """
@@ -32,8 +32,7 @@ def test_item_delete():
     admin_page.checkbox_click()
     admin_page.delete_button_click()
     admin_page.alert_click()
-    admin_page.logout_button_lockator
     assert admin_page.check_product_in_table() == False
-    admin_page.logout_button_lockator
+    admin_page.login_button_click()
 
 

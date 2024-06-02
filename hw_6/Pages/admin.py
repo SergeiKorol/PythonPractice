@@ -170,3 +170,4 @@ class AdminPage():
     def delete_button_click(self):
         WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.delete_button_lockator))
         self._driver.find_element(*self.delete_button_lockator).click()
+    
