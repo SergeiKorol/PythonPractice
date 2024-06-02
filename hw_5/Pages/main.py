@@ -1,27 +1,22 @@
-# 1 Поле поиск $$('[name="search"]')
-# 2 Выпадашка по категориям $$('.fa-solid.fa-bars')
-# 3 Кнопка с итого $$('button.btn.btn-lg.btn-inverse.btn-block.dropdown-toggle.show')
-# 4 Футтер $$('footer')
-# 5 Значёк избранное $$('#wishlist-total')
-# 6 Выпадашка с валютой $$('[data-popper-placement="bottom-start"]')
-# xpath
-# Имя вкладки //head/title
-# Валюта выбранная по умолчанию//a[@class="dropdown-toggle"]/strong
-
-
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
 class MainPage:
+    """
+        Класс для работы с главной страницей и элементами на этой странице
+    """
     url = "http://localhost"
     search_field_locator = (By.CSS_SELECTOR, '[name="search"]')
+    desktop_locator = (By.XPATH, "//a[@href='http://localhost/en-gb/catalog/desktops' and contains(@class, 'nav-link') and contains(@class, 'dropdown-toggle')]")
     category_dropdown_locator = (By.CSS_SELECTOR, '.fa-solid.fa-bars')
-    button_total_locator = (By.CSS_SELECTOR, 'button.btn.btn-lg.btn-inverse.btn-block.dropdown-toggle.show')
-    footer_locator = (By.CSS_SELECTOR, 'footer')
-    wishlist_locator = (By.CSS_SELECTOR, '#wishlist-total')
+    featured_locator = (By.XPATH, '//h3')
+    footer_locator = (By.TAG_NAME, 'footer')
+    wishlist_locator = (By.ID, 'wishlist-total')
     currency_dropdown_locator = (By.CSS_SELECTOR, '[data-popper-placement="bottom-start"]')
+    opencart_locator = (By.XPATH, "//img[contains(@src, 'opencart-logo.png') and @title='Your Store' and @alt='Your Store']")
+    opencart_link_locator = (By.XPATH,"// a[ @ href = 'https://www.opencart.com']")
 
     def __init__(self, driver):
         self._driver = driver
@@ -29,43 +24,43 @@ class MainPage:
         self._driver.get(self.url)
 
     def does_search_field_exist(self):
-        try:
-            WebDriverWait(self._driver, 10).until(EC.visibility_of_element_located(self.search_field_locator))
-            return True
-        except:
-            return False
+        """
+        Метод для проверки наличия элемента поиск и получения его CSS стиля color
+        """
+        search_field = WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.search_field_locator))
+        return search_field.value_of_css_property("color")
 
-    def does_category_dropdown_exist(self):
-        try:
-            WebDriverWait(self._driver, 10).until(EC.visibility_of_element_located(self.category_dropdown_locator))
-            return True
-        except:
-            return False
+    def does_opencart_exist(self):
+        """
+        Метод для проверки наличия главной ссылки opencart и получения его CSS стиля color
+        """
+        opencart = WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.opencart_locator))
+        return opencart.value_of_css_property("color")
 
-    def does_button_total_exist(self):
-        try:
-            WebDriverWait(self._driver, 10).until(EC.visibility_of_element_located(self.button_total_locator))
-            return True
-        except:
-            return False
+    def does_featured_exist(self):
+        """
+        Метод для проверки наличия ссылки opencart и получения его CSS стиля color
+        """
+        featured = WebDriverWait(self._driver, 3).until(EC.visibility_of_element_located(self.featured_locator))
+        return featured.value_of_css_property("color")
 
     def does_footer_exist(self):
-        try:
-            WebDriverWait(self._driver, 10).until(EC.visibility_of_element_located(self.footer_locator))
-            return True
-        except:
-            return False
+        """
+        Метод для проверки наличия footer и получения его CSS стиля color
+        """
+        footer = WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.footer_locator))
+        return footer.value_of_css_property("color")
 
     def does_wishlist_exist(self):
-        try:
-            WebDriverWait(self._driver, 10).until(EC.visibility_of_element_located(self.wishlist_locator))
-            return True
-        except:
-            return False
+        """
+        Метод для проверки наличия кнопки wishlist и получения его CSS стиля color
+        """
+        wishlist = WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.wishlist_locator))
+        return wishlist.value_of_css_property("color")
 
-    def does_currency_dropdown_exist(self):
-        try:
-            WebDriverWait(self._driver, 10).until(EC.visibility_of_element_located(self.currency_dropdown_locator))
-            return True
-        except:
-            return False
+    def does_opencart_link_exist(self):
+        """
+        Метод для проверки наличия ссылки opencart в футтере и получения его CSS стиля color
+        """
+        opencart_link = WebDriverWait(self._driver, 2).until(EC.visibility_of_element_located(self.opencart_link_locator))
+        return opencart_link.value_of_css_property("color")
