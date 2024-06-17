@@ -23,7 +23,6 @@ class AdminPage():
     #add_new_locator = (By.XPATH, '//a[contains(@aria-label, "Add New") and contains(@class, "btn btn-primary")]')
     #add_new_locator = (By.XPATH, '//div[@id="content"]//a[@aria-label="Add New" and contains(@class, "btn btn-primary")]')
     add_new_locator =(By.CSS_SELECTOR, ".fa-plus")
-    #//li[@id ="menu-catalog"]/a
     product_name_locator = (By.ID, 'input-name-1')
     meta_title_locator = (By.ID, 'input-meta-title-1')
     data_tab_locator = (By.XPATH, '//a[contains(text(), "Data")]')
